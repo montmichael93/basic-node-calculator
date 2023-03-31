@@ -1,85 +1,36 @@
 // JavaScript source code
 
 var rs = require('readline-sync');
+const opList = ['/', '+', '-', '+'];
 
-var operator;
-var firstNumber;
-var secondNumber;
-var operationInput;
-var firstNumInput;
-var secondNumInput;
-
-
-function getOperation() {
-    while (true) {
-        operator = rs.question('What operation would you like to perform? ');
-        if (operator === '/' || operator === '*' || operator === '-' || operator === '+') {
-            return operator;
-        } else {
-            console.log('That is not a valid operation');
-            operator = rs.question('What operation would you like to perform? ');
-            console.log('That is not a valid operation');
-        }
-    }
-
-
+function getOperation(limit) {
+  return rs.question('What operation would you like to perform? ', {
+    limit,
+    limitMessage: 'that is not a value operation',
+  });
 }
 
-operationInput = getOperation();
-
-//console.log(operationInput)
-
-function getFirstNumber() {
-  while(true) {
-    firstNumber = rs.question("Please enter the first number ")
-    if (isNaN(Number(firstNumber)) || firstNumber === '') {
-        console.log('This is not a number')
-        firstNumber = rs.question("Please enter the first number ")
-        console.log('This is not a number')
-    } else {
-        return Number(firstNumber)
-    }
-  }
+function getNumber(order) {
+  return rs.questionInt(`please enter the ${order} number`, {
+    limitMessage: 'This is not a valid number'
+  });
 }
 
-firstNumInput = getFirstNumber();
-
-
-//console.log(firstNumInput)
-
-function getSecondNumber() {
-  while (true) {
-    secondNumber = rs.question("Please enter the second number ")
-    if (isNaN(Number(secondNumber)) || secondNumber === '') {
-      console.log('This is not a number')
-      secondNumber = rs.question("Please enter the second number ")
-      console.log('This is not a number')
-    } else {
-      return Number(secondNumber)
-    }
-  }
-}
-
-secondNumInput = getSecondNumber();
-
- //console.log(secondNumInput)
-
-function result(num1, num2) {
-    let answer = 0;
-
+function result(operationInput, num1, num2) {
     if (operationInput === '/') {
-        answer = num1 / num2
+        return num1 / num2
     } else if (operationInput === '*') {
-        answer = num1 * num2;
+      return num1 * num2;
     } else if (operationInput === '-') {
-        answer = num1 - num2;
-    } else if (operationInput === '+') {
-        answer = num1 + num2;
+      return num1 - num2;
+    } else  {
+      return num1 + num2;
     }
-    return answer
-
 }
 
-outPut = result(firstNumInput, secondNumInput)
+const operationInput = getOperation(opList);
+const firstNumInput = getNumber('first');
+const secondNumInput = getNumber('second');
+outPut = result(operationInput, firstNumInput, secondNumInput)
 
-console.log("The result is: " + outPut);
+console.log("The result is: " + outPut); 
